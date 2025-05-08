@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_partner_form_social_accounts" model="ir.ui.view">
+        <field name="name">res.partner.form.social.accounts</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Social Accounts">
+                    <group>
+                        <field name="facebook_url" placeholder="https://facebook.com/username"/>
+                        <field name="linkedin_url" placeholder="https://linkedin.com/in/username"/>
+                        <field name="twitter_url" placeholder="https://twitter.com/username"/>
+                    </group>
+                    <group invisible="not is_profile_complete">
+                        <field name="is_profile_complete" invisible="1"/>
+                        <label for="is_profile_complete"/>
+                        <img src="/crm_social_accounts/static/img/checkmark.png" 
+                            alt="Profile Complete"
+                            style="width: 16px; height: 16px; display: inline-block; vertical-align: middle;"/>
+                        <div class="o_form_label" style="display: inline-block; vertical-align: middle; margin-left: 5px;">Profile Complete</div>
+                    </group>
+                </page>
+            </notebook>
+
+            <field name="website" position="after">
+                <field name="is_profile_complete" invisible="1"/>
+                <group invisible="not is_profile_complete">
+                    <img src="/crm_social_accounts/static/img/checkmark.png" 
+                        alt="Profile Complete"
+                        style="width: 16px; height: 16px; display: block; margin: 2px auto;"/>
+                </group>
+            </field>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_partner_tree_social_accounts" model="ir.ui.view">
+        <field name="name">res.partner.tree.social.accounts</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="email" position="after">
+                <field name="is_profile_complete" string="Profile Complete"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Filter for Incomplete Profiles - Versión actualizada para Odoo 17 -->
+    <record id="view_partner_filter_incomplete_profiles" model="ir.ui.view">
+        <field name="name">res.partner.filter.incomplete.profiles</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <!-- Opción 1: Usar un XPath más genérico que funcione en Odoo 17 -->
+            <xpath expr="//search" position="inside">
+                <filter name="incomplete_profiles" string="Incomplete Profiles" domain="[('is_profile_complete', '=', False)]"/>
+            </xpath>
+            
+            <!-- Opción alternativa 2: Si necesitas posición específica -->
+            <!-- <xpath expr="//filter[last()]" position="after">
+                <filter name="incomplete_profiles" string="Incomplete Profiles" domain="[('is_profile_complete', '=', False)]"/>
+            </xpath> -->
+        </field>
+    </record>
+</odoo>

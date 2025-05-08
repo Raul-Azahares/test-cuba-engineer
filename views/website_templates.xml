@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="customer_promotion_template" name="Customer Promotion">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Our Valued Customers</h1>
+                <form method="get" action="/customers">
+                    <input type="text" name="search" t-att-value="search_query" placeholder="Search by name or social account"/>
+                    <button type="submit">Search</button>
+                </form>
+                <div class="row">
+                    <t t-foreach="partners" t-as="partner">
+                        <div class="col-md-4">
+                            <h3 t-esc="partner.name"/>
+                            <p>Email: <t t-esc="partner.email or 'N/A'"/></p>
+                            <p>
+                                <img src="/crm_social_accounts/static/img/facebook.png" alt="Facebook" style="width:20px;"/>
+                                <a t-att-href="partner.facebook_url" t-esc="partner.facebook_url or 'N/A'"/>
+                            </p>
+                            <p>
+                                <img src="/crm_social_accounts/static/img/linkedin.png" alt="LinkedIn" style="width:20px;"/>
+                                <a t-att-href="partner.linkedin_url" t-esc="partner.linkedin_url or 'N/A'"/>
+                            </p>
+                            <p>
+                                <img src="/crm_social_accounts/static/img/twitter.png" alt="Twitter" style="width:20px;"/>
+                                <a t-att-href="partner.twitter_url" t-esc="partner.twitter_url or 'N/A'"/>
+                            </p>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
